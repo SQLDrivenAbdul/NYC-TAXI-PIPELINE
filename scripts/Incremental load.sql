@@ -20,7 +20,7 @@ CREATE SCHEMA gold;
 GO
 
 /*
-CREATED THE BRONZE  AND SILVER TABLE 
+The following sql script creates the bronze and silver layer tables.
 */
 
 CREATE TABLE bronze.nyc_inc(
@@ -160,7 +160,8 @@ GROUP BY VendorID,vendor_name
 
 
 /*
-Data loading script		
+Data loading script. 
+The FIRE_TRIGGERS option is key when using a bulk insert, else the trigger will not be fired; also means the target table not be loaded.
 */
 BULK INSERT bronze.nyc_inc
 FROM 'C:\Users\USER\OneDrive\Desktop\NYC_ETL_PRROJECT FILE\yellow_tripdata_2024-01.csv' --testing with january data
