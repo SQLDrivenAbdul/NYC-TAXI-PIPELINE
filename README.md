@@ -11,3 +11,7 @@ The dataset downloaded from New York City Taxi and Limosine Commission. It house
 
 ### Data Architecture
 Below is the diagram showing the flow of data through the pipeline - from source,ingestion, to consumption.
+
+
+[![NYC Yellow Taxi Data Architecture](docs/NYC%20Yellow_Taxi%20Data%20Architecture.PNG)](docs/NYC%20Yellow_Taxi%20Data%20Architecture.PNG)
+
