@@ -56,7 +56,7 @@ CREATE TABLE bronze.yellow_taxi(
 
 /*
  Designed a stored procedure that load all 2024 data to the bronze table. To use, simply run 
-EXEC bronze.load_nycbronze in your management system and the bronze table  will be populated with data.
+EXEC bronze.load_nycbronze in your management system and the bronze table will be populated with data.
   */
 
 CREATE PROCEDURE [bronze].[load_nycbronze]
@@ -193,7 +193,6 @@ PRINT 'Load_time: ' + CAST(DATEDIFF(SECOND,@load_end_time,@load_start_time)AS VA
 
 /*
 SILVER LAYER
- a CTA  that cleans the bronze layer.
 */
 SELECT
 			VendorID,
