@@ -55,8 +55,8 @@ CREATE TABLE bronze.yellow_taxi(
 )
 
 /*
- Designed a strored procedure that load all  2024 data to the bronze table. To use, simple run 
-EXEC bronze.load_nycbronze in your management and the bronze table  will be populated.
+ Designed a stored procedure that load all 2024 data to the bronze table. To use, simply run 
+EXEC bronze.load_nycbronze in your management system and the bronze table  will be populated with data.
   */
 
 CREATE PROCEDURE [bronze].[load_nycbronze]
@@ -261,14 +261,4 @@ GOLD LAYER
 	GROUP BY VendorID,vendor_name
 
 
-/*
-GOLD LAYER
-*/
 
-	CREATE VIEW gold.yellow_taxi 
-	AS
-	SELECT  
-		vendor_name,
-		AVG(fare_amount) AS avg_fare_amount
-	FROM silver.yellow_taxi
-	GROUP BY VendorID,vendor_name
