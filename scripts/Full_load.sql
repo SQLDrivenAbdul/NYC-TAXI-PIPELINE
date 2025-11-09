@@ -192,5 +192,83 @@ PRINT 'Load_time: ' + CAST(DATEDIFF(SECOND,@load_end_time,@load_start_time)AS VA
 
 
 /*
-
+SILVER LAYER
+ a CTA  that cleans the bronze layer.
 */
+SELECT
+			VendorID,
+			CASE 
+				WHEN VendorID = 1 THEN 'Creative Mobility Technologies, LLC'
+				WHEN VendorID = 2 THEN 'Curb Mobility, LLC'
+				WHEN VendorID = 6 THEN 'Myle Technologies Inc'
+				WHEN VendorID = 7 THEN 'Helix'
+			END AS vendor_name,
+			TRY_CONVERT(datetime2,TRIM(tpep_pickup_datetime),120) AS tpep_pickup_datetime,
+			TRY_CONVERT(datetime2,TRIM(tpep_dropoff_datetime),120) AS tpep_dropoff_datetime,
+			passenger_count,
+			trip_distance,
+			CASE 
+				WHEN RatecodeID = 1.0 THEN 'Standard'
+				WHEN RatecodeID = 2.0 THEN 'JFK'
+				WHEN RatecodeID = 3.0 THEN 'Newark'
+				WHEN RatecodeID = 4.0 THEN 'Nassau or Westchester'
+				WHEN RatecodeID = 5.0 THEN 'Negotiated fare'
+				WHEN RatecodeID = 6.0 THEN 'Group ride'
+				WHEN RatecodeID = 99.0 THEN 'Unknown'
+			END AS fare_category,
+			CASE 
+				WHEN TRIM(UPPER(store_and_fwd_flag)) = 'Y' THEN 'Yes'
+				WHEN TRIM(UPPER(store_and_fwd_flag)) = 'N' THEN 'No'
+			END AS store_and_fwd_flag,
+			PULocationID,
+			DOLocationID,
+			CASE 
+				WHEN payment_type = 0 THEN 'Flex fare trip'
+				WHEN payment_type = 1 THEN 'Credit card'
+				WHEN payment_type = 2 THEN  'Cash'
+				WHEN payment_type = 3 THEN  'No charge'
+				WHEN payment_type = 4 THEN  'Dispute'
+				WHEN payment_type = 5 THEN  'Unknown'
+				WHEN payment_type = 6 THEN  'Voided trip'
+			END AS payment_type,
+			ABS(fare_amount) AS fare_amount,
+			ABS(extra) AS extra,
+			ABS(mta_tax) AS mta_tax,
+			ABS(tip_amount) AS tip_amount,
+			ABS(tolls_amount)  AS tolls_amount,
+		    ABS(improvement_surcharge) AS improvement_surcharge,
+			ABS(total_amount) AS total_amount,
+			ABS(congestion_surcharge) AS congestion_surcharge,
+			ABS(airport_fee) AS airport_fee,
+			CASE
+				WHEN TRY_CONVERT(datetime,TRIM(tpep_dropoff_datetime),120) < TRY_CONVERT(datetime, TRIM(tpep_pickup_datetime),120) THEN 'Invalid'
+				WHEN TRY_CONVERT(datetime,TRIM(tpep_dropoff_datetime),120) = TRY_CONVERT(datetime, TRIM(tpep_pickup_datetime),120)THEN 'Cancelled'
+				ELSE 'Valid'
+			END AS trip_status
+	INTO silver.yellow_taxi
+	FROM bronze.yellow_taxi
+	;
+
+/*
+GOLD LAYER
+*/
+	CREATE VIEW gold.yellow_taxi 
+	AS
+	SELECT  
+		vendor_name,
+		AVG(fare_amount) AS avg_fare_amount
+	FROM silver.yellow_taxi
+	GROUP BY VendorID,vendor_name
+
+
+/*
+GOLD LAYER
+*/
+
+	CREATE VIEW gold.yellow_taxi 
+	AS
+	SELECT  
+		vendor_name,
+		AVG(fare_amount) AS avg_fare_amount
+	FROM silver.yellow_taxi
+	GROUP BY VendorID,vendor_name
