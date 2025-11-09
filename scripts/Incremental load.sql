@@ -144,35 +144,31 @@ END
 /*
 GOLD LAYER
 
-I created a view as the gold layer. proper naming of columns to ensure easy understanding of what each stands for
+The aggregation change dynamically has new data is add
 */
 
 CREATE VIEW 
-gold.nyc_inc
+[gold].[nyc_inc]
 
 AS
 SELECT
-	VendorID AS vendor_id,
 	vendor_name,
-	trip_status,
-	tpep_pickup_datetime AS pickup_datetime,
-	tpep_dropoff_datetime AS dropoff_datetime,
-	passenger_count,
-	trip_distance,
-	PULocationID,
-	DOLocationID,
-	fare_category,
-	payment_type,
-	fare_amount,
-	extra,
-	mta_tax,
-	tip_amount,
-	tolls_amount,
-	total_amount,
-	store_and_fwd_flag AS store_and_forward_flag,
-	improvement_surcharge,
-	congestion_surcharge,
-	airport_fee
-FROM silver.nyc_inc
+	ROUND(AVG(fare_amount),2) AS avg_fare_amount
 
+FROM silver.nyc_inc
+GROUP BY VendorID,vendor_name
+
+
+/*
+Data loading script		
+*/
+BULK INSERT bronze.nyc_inc
+FROM 'C:\Users\USER\OneDrive\Desktop\NYC_ETL_PRROJECT FILE\yellow_tripdata_2024-01.csv' --testing with january data
+WITH
+(
+FIRSTROW = 2,
+FIELDTERMINATOR = ',',
+TABLOCK,
+FIRE_TRIGGERS
+);
 
