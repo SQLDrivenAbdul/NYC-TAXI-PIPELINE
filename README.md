@@ -76,8 +76,11 @@ for filename in os.listdir(source_folder):
 print("🎉 All conversions completed successfully!")
 
 ```
+LOADING STRATEGIES
 
+The data pipeline is designed to demonstrate two loading strategies. They are as follows:
 
+Full Load: Using this approach, all 12 months data into the pipeline. To easy loading , i wrapped the code in a stored procedure aliased bronze.load
 
 
 
