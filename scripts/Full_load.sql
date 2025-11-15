@@ -204,7 +204,7 @@ SELECT
 			END AS vendor_name,
 			TRY_CONVERT(datetime2,TRIM(tpep_pickup_datetime),120) AS tpep_pickup_datetime,
 			TRY_CONVERT(datetime2,TRIM(tpep_dropoff_datetime),120) AS tpep_dropoff_datetime,
-			passenger_count,
+			CAST(passenger_count AS INT) AS passenger_count,
 			trip_distance,
 			CASE 
 				WHEN RatecodeID = 1.0 THEN 'Standard'
