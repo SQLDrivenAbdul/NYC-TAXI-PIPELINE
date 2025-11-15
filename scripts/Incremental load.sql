@@ -70,8 +70,8 @@ CREATE TABLE bronze.nyc_inc(
 	load_datetime datetime NULL
 )
 /*
-An After Insert trigger was attached to this table, which ensures that whenever there is new data in the bronze table, it is transformed and loaded to the silver table.
-script below
+An After Insert trigger is attached to the bronze table, which ensures that whenever there is new data in it, it is transformed and loaded to the silver table.
+ The script of the trigger attached below
 */
 
 CREATE TRIGGER bronze.AfterInsert ON bronze.nyc_inc
@@ -145,7 +145,7 @@ END
 /*
 GOLD LAYER
 
-The aggregation change dynamically has new data is add
+The aggregation change dynamically has new data is loaded into the pipeline
 */
 
 CREATE VIEW gold.yellowtaxi_weekday_inc
