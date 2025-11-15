@@ -71,7 +71,7 @@ CREATE TABLE bronze.nyc_inc(
 )
 /*
 An After Insert trigger is attached to the bronze table, which ensures that whenever there is new data in it, it is transformed and loaded to the silver table.
- The script of the trigger attached below
+ The script of the trigger is attached below
 */
 
 CREATE TRIGGER bronze.AfterInsert ON bronze.nyc_inc
@@ -166,7 +166,7 @@ GROUP BY payment_type
 
 /*
 THE META-DATA TABLE CREATION
-This table keep logs of every successful data loaded. It assigns a log_id to every load and keep date_time each batch finished loading
+This table keep logs of every successful data loaded. It assigns a log_id to every load and keep date and time each batch finished loading
 */
 
 CREATE TABLE metadata_table(
