@@ -251,13 +251,18 @@ SELECT
 /*
 GOLD LAYER
 */
-	CREATE VIEW gold.yellow_taxi 
-	AS
-	SELECT  
-		vendor_name,
-		AVG(fare_amount) AS avg_fare_amount
-	FROM silver.yellow_taxi
-	GROUP BY VendorID,vendor_name
+	
+CREATE VIEW gold.yellowtaxi_weekday
+AS
+SELECT DATENAME(WEEKDAY,tpep_pickup_datetime) AS Day_of_Week ,COUNT(*) AS trips
+FROM silver.yellow_taxi
+GROUP BY DATENAME(WEEKDAY,tpep_pickup_datetime)
 
+---
 
+CREATE VIEW  gold.yellowtaxi_payment_type
+AS
+SELECT payment_type,COUNT(*) AS transactions
+FROM silver.yellow_taxi
+GROUP BY payment_type
 
