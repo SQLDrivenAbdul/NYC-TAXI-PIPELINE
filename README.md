@@ -16,12 +16,14 @@ I was contracted by the Data Engineering Community (DEC) to develop and implemen
 - Design a clear data architecture that shows the flow of data in the pipeline.
 - It should demonstrate both full and incremental loading strategies
 
+---
   
 # Data Architecture  
 
 
 [![NYC Yellow Taxi Data Architecture](docs/NYC%20Yellow_Taxi%20Data%20Architecture.PNG)](docs/NYC%20Yellow_Taxi%20Data%20Architecture.PNG)  
 
+---
 
 I downloaded the datasets all as parquet files using the python script below  
 
@@ -59,7 +61,7 @@ for month in range(1, 13):
 print("🎉 All downloads completed!")
 
 ```
-
+---
 
 I converted to CSV using the script below not for any performance reason but because i am not familiar with parquet as at the time of the project, so i chose to work with what i am familiar with.  
 
@@ -83,21 +85,38 @@ for filename in os.listdir(source_folder):
 print("🎉 All conversions completed successfully!")
 
 ```
+---
+
 
 ### Data Loading Strategies
 
-Full Load: This approach of data loading means that all data has to be loaded at once - from January to December data. To achieve this in my data pipeline, I wrote a script to load all data 2024 wrapped as a stored procedure. This procedure, once executed, populates the bronze layer with data.
+**Full Load:** This approach of data loading means that all data has to be loaded at once - from January to December data. To achieve this in my data pipeline, I wrote a script to load all data 2024 wrapped as a stored procedure. This procedure, once executed, populates the bronze layer with data.
 
 The script that form the stored procedure can be found in [full_load.sql](./scripts/Full_load.sql)
-
-
 
 To run the procedure, simply run the code below in your data management system.
 
 ```SQL
 EXEC bronze.load_nycbronze
 ```
+---
 
+**Incremental Load:** This approach takes the monthly data one at a time. As new data goes into the pipeline, they are appended to the already existing data in the pipeline.
+For instance, the February data when loaded will be added to the January that is already existing in the pipeline.
+
+Since i will be loading a single file at a time, i use a simply bulk insert statement for loading the data to the bronze layer 
+
+```SQL
+BULK INSERT bronze.nyc_inc
+FROM 'C:\Users\USER\OneDrive\Desktop\NYC_ETL_PRROJECT FILE\yellow_tripdata_2024-01.csv' 
+WITH
+(
+FIRSTROW = 2,
+FIELDTERMINATOR = ',',
+TABLOCK,
+FIRE_TRIGGERS
+);
+```
 
 
 
