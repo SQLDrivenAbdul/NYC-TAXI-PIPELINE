@@ -97,6 +97,8 @@ print("🎉 All conversions completed successfully!")
 **Full Load:** This approach of data loading means that all data has to be loaded at once - from January to December data. To achieve this in my data pipeline, I wrote a script to load all data of 2024 wrapped as a stored procedure. This procedure, once executed, populates the bronze layer with data.
 
 <p>
+
+  
 The script that form the stored procedure can be found here: [Full_load.sql](./scripts/Full_load.sql)
 
 To use the procedure, simply run the code below in your data management system.
@@ -132,6 +134,7 @@ FIRE_TRIGGERS
 <p align="justify">
 An AFTER-INSERT TRIGGER has been attached to the bronze layer that ensures that as new data comes into it, it is transformed and a silver layer is created with the cleaned data. Then aggreagations are performed on the cleaned data and saved to gold layer. As these new data come in and they are transformed, the aggregation changes dynamically to reflect the changes that comes with the new data. It is interesting how the only manual operation in this process is the data loading. 
 <p>
+  
 Find the code of the trigger here  [Incremental_load.sql](./scripts/Incremental_load.sql)
 
 
