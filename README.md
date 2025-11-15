@@ -3,7 +3,7 @@
 
 **Introduction**
 <p align="justify">
-I was contracted by the Data Engineering Community (DEC) to develop and implement a SQL-based data pipeline, that ingest, transform, and aggregate the  NYC Yellow Taxi data for the year 2024. The dataset contains month-by-month operational data on yellow taxi trips. It has 20 columns that describes each operation of the taxis in 2024; the columns include vendorID, trip_start_datetime, trip_end_datetime, fare_amount among others that can be used to uncover insights and track trends.
+I was contracted by the Data Engineering Community (DEC) to develop and implement a SQL-based data pipeline, that ingest, transform, and aggregate the  NYC Yellow Taxi data for the year 2024. The datasets consist of month-by-month operational data on yellow taxi trips. It has 20 columns that describes operations of the taxis in 2024; the columns include vendorID, trip_start_datetime, trip_end_datetime, fare_amount among others that can be used to uncover insights and track trends.
 <p>
 
 
@@ -63,8 +63,10 @@ print("🎉 All downloads completed!")
 ```
 ---
 
-I converted to CSV using the script below not for any performance reason but because i am not familiar with parquet as at the time of the project, so i chose to work with what i am familiar with.  
-
+<p align="justify">
+I converted the datasets to CSV using the script below not for any performance reason but because i am not familiar with parquet as at the time of the project, so i chose to work with what i am familiar with.  
+<p>
+  
 ```python
 for filename in os.listdir(source_folder):
     if filename.endswith(".parquet"):
@@ -90,20 +92,30 @@ print("🎉 All conversions completed successfully!")
 
 ### Data Loading Strategies
 
-**Full Load:** This approach of data loading means that all data has to be loaded at once - from January to December data. To achieve this in my data pipeline, I wrote a script to load all data 2024 wrapped as a stored procedure. This procedure, once executed, populates the bronze layer with data.
+<p align="justify">
+  
+**Full Load:** This approach of data loading means that all data has to be loaded at once - from January to December data. To achieve this in my data pipeline, I wrote a script to load all data of 2024 wrapped as a stored procedure. This procedure, once executed, populates the bronze layer with data.
 
-The script that form the stored procedure can be found in [full_load.sql](./scripts/Full_load.sql)
+<p>
+The script that form the stored procedure can be found here: [Full_load.sql](./scripts/Full_load.sql)
 
-To run the procedure, simply run the code below in your data management system.
+To use the procedure, simply run the code below in your data management system.
 
 ```SQL
 EXEC bronze.load_nycbronze
 ```
+Once the bronze is populated, the data is transformed and loaded into silver layer.  
+The cleaned data is then leveraged to answer some analytical questions saved into the gold layer.
+
 ---
 
+<p align="justify">
+  
 **Incremental Load:** This approach takes the monthly data one at a time. As new data goes into the pipeline, they are appended to the already existing data in the pipeline.
 For instance, the February data when loaded will be added to the January that is already existing in the pipeline.
 
+<p>
+  
 Since i will be loading a single file at a time, i use a simply bulk insert statement for loading the data to the bronze layer 
 
 ```SQL
@@ -117,6 +129,12 @@ TABLOCK,
 FIRE_TRIGGERS
 );
 ```
+<p align="justify">
+An AFTER-INSERT TRIGGER has been attached to the bronze layer that ensures that as new data comes into it, it is transformed and a silver layer is created with the cleaned data. Then aggreagations are performed on the cleaned data and saved to gold layer. As these new data come in and they are transformed, the aggregation changes dynamically to reflect the changes that comes with the new data. It is interesting how the only manual operation in this process is the data loading. 
+<p>
+Find the code of the trigger here  [Incremental_load.sql](./scripts/Incremental_load.sql)
+
+
 
 
 
