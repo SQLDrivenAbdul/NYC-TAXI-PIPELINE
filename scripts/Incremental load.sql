@@ -147,16 +147,19 @@ GOLD LAYER
 The aggregation change dynamically has new data is add
 */
 
-CREATE VIEW 
-[gold].[nyc_inc]
-
+CREATE VIEW gold.yellowtaxi_weekday_inc
 AS
-SELECT
-	vendor_name,
-	ROUND(AVG(fare_amount),2) AS avg_fare_amount
-
+SELECT DATENAME(WEEKDAY,tpep_pickup_datetime) AS Day_of_Week ,COUNT(*) AS trips
 FROM silver.nyc_inc
-GROUP BY VendorID,vendor_name
+GROUP BY DATENAME(WEEKDAY,tpep_pickup_datetime)
+
+
+
+CREATE VIEW  gold.yellowtaxi_payment_type_inc
+AS
+SELECT payment_type,COUNT(*) AS transactions
+FROM silver.nyc_inc
+GROUP BY payment_type
 
 
 /*
