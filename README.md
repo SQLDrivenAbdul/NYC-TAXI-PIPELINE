@@ -88,7 +88,8 @@ print("🎉 All conversions completed successfully!")
 
 Full Load: This approach of data loading means that all data has to be loaded at once - from January to December data. To achieve this in my data pipeline, I wrote a script to load all data 2024 wrapped as a stored procedure. This procedure, once executed, populates the bronze layer with data.
 
-The script that form the stored procedure can be found in [scripts](./[folder-name](https://github.com/SQLDrivenAbdul/NYC-TAXI-PIPELINE/blob/main/scripts/Full_load.sql)/)
+The script that form the stored procedure can be found in [full_load.sql](./scripts/full_load.sql)
+
 
 
 To run the procedure, simply run the code below in your data management system.
