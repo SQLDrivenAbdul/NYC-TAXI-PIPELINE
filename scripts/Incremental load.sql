@@ -142,6 +142,32 @@ SET NOCOUNT ON;
 END
 
 /*
+THE META-DATA TABLE CREATION
+This table keep logs of every successful data loaded. It assigns a log_id to every load and keep date_time each batch finished loading
+*/
+
+CREATE TABLE metadata_table(
+	log_id INT IDENTITY(1,1)  PRIMARY KEY,
+	load_datetime datetime)
+
+
+
+/*
+THE LOAD_META TRIGGER
+I created a trigger that fires the meta_data table once the bronze layer is populated.
+Attached is the script below
+*/
+CREATE TRIGGER [bronze].[load_meta] ON [bronze].[nyc_inc]
+AFTER INSERT 
+AS
+BEGIN
+INSERT INTO metadata_table
+SELECT
+	
+	MAX(GETDATE()) FROM INSERTED
+END
+
+/*
 GOLD LAYER
 
 The aggregation change dynamically has new data is add
