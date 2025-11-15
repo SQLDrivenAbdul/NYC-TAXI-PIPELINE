@@ -2,23 +2,29 @@
 
 
 **Introduction**
-
-This project is all about development of SQL-based data pipeline. The goal of the pipeline is to extract the data from it source, transform it and make it ready for analytics.
-
-
-
+<p align="justify">
+I was contracted by the Data Engineering Community (DEC) to develop and implement a SQL-based data pipeline, that ingest, transform, and aggregate the  NYC Yellow Taxi data for the year 2024. The dataset contains month-by-month operational data on yellow taxi trips. It has 20 columns that describes each operation of the taxis in 2024; the columns include vendorID, trip_start_datetime, trip_end_datetime, fare_amount among others that can be used to uncover insights and track trends.
+<p>
 
 
-
-## Data Architecture 
-
-[![NYC Yellow Taxi Data Architecture](docs/NYC%20Yellow_Taxi%20Data%20Architecture.PNG)](docs/NYC%20Yellow_Taxi%20Data%20Architecture.PNG)
-
+#### Data Source
+**NYC Taxi and Limousine Commission** website  
+**Link:** https://www.nyc.gov/site/tlc/index.page  
 
 
-The architecture shows how the data flows through the data pipeline. The NYC yellow taxi datasets for the 2024 was downloaded from the NYC Taxi and Limousine Commission website, all as parquet files. I decided to convert them to CSV files not for a performance reason but because i was not familiar with parquet.
+## Project Requirements
+- Design a clear data architecture that shows the flow of data in the pipeline.
+- It should demonstrate both full and incremental loading strategies
 
-I downloaded the datasets all as parquet files using the python script below 
+  
+# Data Architecture  
+
+
+[![NYC Yellow Taxi Data Architecture](docs/NYC%20Yellow_Taxi%20Data%20Architecture.PNG)](docs/NYC%20Yellow_Taxi%20Data%20Architecture.PNG)  
+
+
+I downloaded the datasets all as parquet files using the python script below  
+
 
 ```python
 import requests
@@ -54,7 +60,8 @@ print("🎉 All downloads completed!")
 
 ```
 
-I converted to CSV using the script below
+
+I converted to CSV using the script below not for any performance reason but because i am not familiar with parquet as at the time of the project, so i chose to work with what i am familiar with.  
 
 ```python
 for filename in os.listdir(source_folder):
@@ -76,12 +83,16 @@ for filename in os.listdir(source_folder):
 print("🎉 All conversions completed successfully!")
 
 ```
-LOADING STRATEGIES
 
-The data pipeline is designed to demonstrate two loading strategies. They are as follows:
+### Data Loading Strategies
 
-Full Load: Using this approach, all 12 months data into the pipeline. To easy loading , i wrapped the code in a stored procedure aliased bronze.load
+Full Load: This approach of data loading means that all data has to be loaded at once - from January to December data. To achieve this in my data pipeline, I wrote a script to load all data 2024 wrapped as stored procedure. This procedure, once executed, populates the bronze layer with data.
 
+To run the procedure, simply run the code below in your data management system.
+
+```SQL
+
+```
 
 
 
