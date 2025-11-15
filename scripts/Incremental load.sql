@@ -50,7 +50,7 @@ CREATE TABLE bronze.nyc_inc(
 	vendor_name VARCHAR(50) NULL,
 	tpep_pickup_datetime datetime2(7) NULL,
 	tpep_dropoff_datetime datetime2(7) NULL,
-	passenger_count FLOAT NULL,
+	passenger_count INT NULL,
 	trip_distance FLOAT NULL,
 	fare_category VARCHAR(50) NULL,
 	store_and_fwd_flag CHAR(10) NULL,
@@ -97,7 +97,7 @@ SET NOCOUNT ON;
 			END AS vendor_name,
 			TRY_CONVERT(datetime2,TRIM(tpep_pickup_datetime),120) AS tpep_pickup_datetime,
 			TRY_CONVERT(datetime2,TRIM(tpep_dropoff_datetime),120) AS tpep_dropoff_datetime,
-			passenger_count,
+			CAST(passenger_count AS INT) AS passenger_count,
 			trip_distance,
 			CASE 
 				WHEN RatecodeID = 1.0 THEN 'Standard'
@@ -141,6 +141,29 @@ SET NOCOUNT ON;
 	FROM INSERTED
 END
 
+
+/*
+GOLD LAYER
+
+The aggregation change dynamically has new data is add
+*/
+
+CREATE VIEW gold.yellowtaxi_weekday_inc
+AS
+SELECT DATENAME(WEEKDAY,tpep_pickup_datetime) AS Day_of_Week ,COUNT(*) AS trips
+FROM silver.nyc_inc
+GROUP BY DATENAME(WEEKDAY,tpep_pickup_datetime)
+
+
+
+CREATE VIEW  gold.yellowtaxi_payment_type_inc
+AS
+SELECT payment_type,COUNT(*) AS transactions
+FROM silver.nyc_inc
+GROUP BY payment_type
+
+
+
 /*
 THE META-DATA TABLE CREATION
 This table keep logs of every successful data loaded. It assigns a log_id to every load and keep date_time each batch finished loading
@@ -167,25 +190,6 @@ SELECT
 	MAX(GETDATE()) FROM INSERTED
 END
 
-/*
-GOLD LAYER
-
-The aggregation change dynamically has new data is add
-*/
-
-CREATE VIEW gold.yellowtaxi_weekday_inc
-AS
-SELECT DATENAME(WEEKDAY,tpep_pickup_datetime) AS Day_of_Week ,COUNT(*) AS trips
-FROM silver.nyc_inc
-GROUP BY DATENAME(WEEKDAY,tpep_pickup_datetime)
-
-
-
-CREATE VIEW  gold.yellowtaxi_payment_type_inc
-AS
-SELECT payment_type,COUNT(*) AS transactions
-FROM silver.nyc_inc
-GROUP BY payment_type
 
 
 /*
