@@ -154,7 +154,9 @@ CREATE TABLE metadata_table(
 ```
 
 
-THE LOAD_META TRIGGER
+THE LOAD_META TRIGGER  
+
+
 I created a trigger that fires the meta_data table once the bronze layer is populated.
 Attached is the script below
 
