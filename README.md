@@ -89,8 +89,7 @@ print("🎉 All conversions completed successfully!")
 ```
 ---
 
-
-### Data Loading Strategies
+## Data Loading Strategies
 
 <p align="justify">
   
@@ -170,7 +169,7 @@ END
 ```
 ---
 
-**Query Examples**
+## Query Examples
  
 ```SQL
 -- Trip volume by Weekday 
@@ -188,4 +187,9 @@ SELECT payment_type,COUNT(*) AS transactions
 FROM silver.nyc_inc
 GROUP BY payment_type
 ```
+
+## Key Learnings
+* Understanding the implementation difference between full load and incremental loading
+* Triggers - using triggers to automate data loading and log keeping
+  
 
