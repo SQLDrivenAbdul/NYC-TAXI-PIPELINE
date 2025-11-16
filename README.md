@@ -135,8 +135,9 @@ FIRE_TRIGGERS
 An AFTER-INSERT TRIGGER has been attached to the bronze layer that ensures that as new data comes into it, it is transformed and a silver layer is created with the cleaned data. Then aggregations are performed on the cleaned data and saved to the gold layer. As these new data come in and they are transformed, the aggregation changes dynamically to reflect the changes that comes with the new data. It is interesting how the only manual operation in this process is the data loading. 
 <p>
   
-Find the code of the trigger here  [Incremental_load.sql](./scripts/Incremental_load.sql)
+Find the code of the trigger here  [Incremental_load.sql](./scripts/Incremental_load.sql)  
 
+---
 
 ## META-DATA Management 
 
@@ -167,3 +168,24 @@ SELECT
 	MAX(GETDATE()) FROM INSERTED
 END
 ```
+---
+
+**Query Examples**
+ 
+```SQL
+-- Trip volume by Weekday 
+CREATE VIEW gold.yellowtaxi_weekday_inc
+AS
+SELECT DATENAME(WEEKDAY,tpep_pickup_datetime) AS Day_of_Week ,COUNT(*) AS trips
+FROM silver.nyc_inc
+GROUP BY DATENAME(WEEKDAY,tpep_pickup_datetime)
+
+
+-- Payment_types performance
+CREATE VIEW  gold.yellowtaxi_payment_type_inc
+AS
+SELECT payment_type,COUNT(*) AS transactions
+FROM silver.nyc_inc
+GROUP BY payment_type
+```
+
