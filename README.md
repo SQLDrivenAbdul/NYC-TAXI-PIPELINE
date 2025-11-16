@@ -132,7 +132,7 @@ FIRE_TRIGGERS
 );
 ```
 <p align="justify">
-An AFTER-INSERT TRIGGER has been attached to the bronze layer that ensures that as new data comes into it, it is transformed and a silver layer is created with the cleaned data. Then aggreagations are performed on the cleaned data and saved to gold layer. As these new data come in and they are transformed, the aggregation changes dynamically to reflect the changes that comes with the new data. It is interesting how the only manual operation in this process is the data loading. 
+An AFTER-INSERT TRIGGER has been attached to the bronze layer that ensures that as new data comes into it, it is transformed and a silver layer is created with the cleaned data. Then aggregations are performed on the cleaned data and saved to the gold layer. As these new data come in and they are transformed, the aggregation changes dynamically to reflect the changes that comes with the new data. It is interesting how the only manual operation in this process is the data loading. 
 <p>
   
 Find the code of the trigger here  [Incremental_load.sql](./scripts/Incremental_load.sql)
@@ -141,10 +141,6 @@ Find the code of the trigger here  [Incremental_load.sql](./scripts/Incremental_
 ## META-DATA Management 
 
 I created a metadata table that houses logs of every successful data loading event. It assigns a log_id and keeps the date and time each batch finish loading.
-
-/*
-THE META-DATA TABLE CREATION
-This table keep logs of every successful data loaded. It assigns a log_id to every load and keep date and time each batch finished loading
 
 
 ```SQL
@@ -157,7 +153,7 @@ CREATE TABLE metadata_table(
 THE LOAD_META TRIGGER  
 
 
-I created a trigger that fires the meta_data table once the bronze layer is populated.
+I created a trigger that fires/feeds the meta_data table once the bronze layer is populated.
 Attached is the script below
 
 ```SQL
