@@ -20,9 +20,30 @@ CREATE SCHEMA gold;
 GO
 
 /*
-The following sql script creates the bronze and silver layer tables.
+The following sql script creates the staging, bronze, silver and metadata tables.
 */
-
+CREATE TABLE [bronze].[staging](
+	[VendorID] [int] NULL,
+	[tpep_pickup_datetime] [varchar](30) NULL,
+	[tpep_dropoff_datetime] [varchar](30) NULL,
+	[passenger_count] [float] NULL,
+	[trip_distance] [float] NULL,
+	[RatecodeID] [float] NULL,
+	[store_and_fwd_flag] [char](10) NULL,
+	[PULocationID] [int] NULL,
+	[DOLocationID] [int] NULL,
+	[payment_type] [int] NULL,
+	[fare_amount] [float] NULL,
+	[extra] [float] NULL,
+	[mta_tax] [float] NULL,
+	[tip_amount] [float] NULL,
+	[tolls_amount] [float] NULL,
+	[improvement_surcharge] [float] NULL,
+	[total_amount] [float] NULL,
+	[congestion_surcharge] [float] NULL,
+	[airport_fee] [float] NULL
+)
+-----------------------------------------
 CREATE TABLE bronze.nyc_inc(
 	VendorID INT NULL,
 	tpep_pickup_datetime VARCHAR(30) NULL,
@@ -69,12 +90,22 @@ CREATE TABLE bronze.nyc_inc(
 	trip_status VARCHAR(50) NULL,
 	load_datetime datetime NULL
 )
+-----------------------------------------
+	
+
+CREATE TABLE metadata_table(
+	log_id INT IDENTITY(1,1)  PRIMARY KEY,
+	load_datetime datetime)
+
+
 /*
-An After Insert trigger is attached to the bronze table, which ensures that whenever there is new data in it, it is transformed and loaded to the silver table.
- The script of the trigger is attached below
+
+TRIGGERS 
+
+	(a) load_silver
 */
 
-CREATE TRIGGER bronze.AfterInsert ON bronze.nyc_inc
+CREATE TRIGGER bronze.AfterInsert ON bronze.load_silver
 AFTER INSERT
 AS
 BEGIN
@@ -137,6 +168,24 @@ BEGIN
 	FROM INSERTED
 END
 
+--------------------------------------------------------
+/*
+	(b) load_meta
+*/
+
+CREATE TRIGGER bronze.load_meta ON bronze.nyc_inc
+AFTER INSERT 
+AS
+BEGIN
+INSERT INTO metadata_table
+SELECT
+	
+	MAX(GETDATE()) FROM INSERTED
+END
+--------------------------------------------------------
+
+
+
 
 /*
 GOLD LAYER
@@ -157,34 +206,6 @@ AS
 SELECT payment_type,COUNT(*) AS transactions
 FROM silver.nyc_inc
 GROUP BY payment_type
-
-
-
-/*
-THE META-DATA TABLE CREATION
-This table keep logs of every successful data loaded. It assigns a log_id to every load and keep date and time each batch finished loading
-*/
-
-CREATE TABLE metadata_table(
-	log_id INT IDENTITY(1,1)  PRIMARY KEY,
-	load_datetime datetime)
-
-
-
-/*
-THE LOAD_META TRIGGER
-I created a trigger that fires the meta_data table once the bronze layer is populated.
-Attached is the script below
-*/
-CREATE TRIGGER [bronze].[load_meta] ON [bronze].[nyc_inc]
-AFTER INSERT 
-AS
-BEGIN
-INSERT INTO metadata_table
-SELECT
-	
-	MAX(GETDATE()) FROM INSERTED
-END
 
 
 
