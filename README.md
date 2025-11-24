@@ -110,7 +110,7 @@ EXEC bronze.load_nycbronze
 <p>
 
   
-The script to the full load can be found here: [Full_load.sql](./scripts/Full_load.sql)
+Link to script: [Full_load.sql](./scripts/Full_load.sql)
 
 
 ---
@@ -150,12 +150,13 @@ SELECT payment_type,COUNT(*) AS transactions
 FROM silver.nyc_inc
 GROUP BY payment_type
 ```
+Link to script: [Incremental Load SQL Script](https://github.com/SQLDrivenAbdul/NYC-TAXI-PIPELINE/blob/main/scripts/Incremental%20load.sql)
 
 ---
 
 DATA LOADING
 
-This is the only manual task in running the pipeline. Once the data is loaded, it pass through all the steps till it reaches the gold layer.
+This is the only manual task in running the pipeline. Once the data is loaded, it pass through all the steps till it reaches the gold layer automatically.
 ```SQL
 BULK INSERT bronze.staging
 FROM 'C:\Users\USER\OneDrive\Desktop\NYC_ETL_PRROJECT FILE\yellow_tripdata_2024-01.csv'
