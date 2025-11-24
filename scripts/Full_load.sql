@@ -31,7 +31,7 @@ GO
 TABLE CREATION
 
 */
-
+DROP TABLE IF EXISTS  bronze.yellow_taxi
 CREATE TABLE bronze.yellow_taxi(
 	VendorID INT NULL,
 	tpep_pickup_datetime VARCHAR(30) NULL,
