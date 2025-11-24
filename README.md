@@ -126,9 +126,9 @@ Incremental Load: This approach takes the monthly data one at a time. As new dat
 
 To achieve this, I created the following:
 
-**STAGING TABLE:** This table is the entry point of the pipeline where all data first land. A trigger ``load_bronze`` is attached to  this table. The job of the trigger is simple, using a ``MERGE STATEMENT`` it simply check data coming from the staging table that are not existing in the bronze layer, when found, they  are inserted into the bronze layer of the pipeline.
+**STAGING TABLE:** This table is the entry point of the pipeline where all data first land. A trigger named ``load_bronze`` is attached to  this table. The job of the trigger is simple, using a ``MERGE STATEMENT`` it simply check data coming from the staging table that are not existing in the bronze layer, when found, they  are inserted into the bronze layer of the pipeline.
 
-**BRONZE LAYER:** This table receives the raw data from the staging table. It has has two triggers attached to  it performing different functions.
+**BRONZE LAYER:** This table receives the raw data from the staging table. It also has two triggers attached to it, both performing different functions.
 
  (a) ``load_silver``: This trigger transform and cleans new data in the bronze layer and insert into the silver layer.  
  (b) ``load_meta``: This trigger tracks data loading into the bronze layer using a metadata table. It records the last successful load datetime dynamically. Any attempt to insert data that's already existing in the bronze leads to the metadata table adding a new record but without a datetime(NULL) because the operation was not successful.
