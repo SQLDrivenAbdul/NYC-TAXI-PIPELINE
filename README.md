@@ -158,7 +158,7 @@ DATA LOADING
 This is the only manual task in running the pipeline. Once the data is loaded, it pass through all the steps till it reaches the gold layer.
 ```SQL
 BULK INSERT bronze.staging
-FROM 'C:\Users\USER\OneDrive\Desktop\NYC_ETL_PRROJECT FILE\yellow_tripdata_2024-02.csv'
+FROM 'C:\Users\USER\OneDrive\Desktop\NYC_ETL_PRROJECT FILE\yellow_tripdata_2024-01.csv'
 WITH
 (
 FIRSTROW = 2,
@@ -167,10 +167,6 @@ TABLOCK,
 FIRE_TRIGGERS
 );
 ```
-
-
-
-
 
 ## Key Learnings
 * Understanding the implementation difference between full load and incremental loading
