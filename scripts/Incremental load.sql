@@ -102,7 +102,73 @@ CREATE TABLE metadata_table(
 
 TRIGGERS 
 
-	(a) load_silver
+	(a) load_bronze
+*/
+
+TRIGGER [bronze].[load_bronze] ON [bronze].[staging]
+AFTER INSERT 
+AS
+BEGIN
+
+MERGE bronze.nyc_inc AS t
+USING INSERTED AS s
+ON t.tpep_pickup_datetime = s.tpep_pickup_datetime
+AND t.tpep_dropoff_datetime = s.tpep_dropoff_datetime
+
+WHEN NOT MATCHED BY TARGET THEN 
+INSERT
+(
+VendorID,
+tpep_pickup_datetime,
+tpep_dropoff_datetime,
+passenger_count,
+trip_distance,
+RatecodeID,
+store_and_fwd_flag,
+PULocationID,
+DOLocationID,
+payment_type,
+fare_amount,
+extra,
+mta_tax,
+tip_amount,
+tolls_amount,
+improvement_surcharge,
+total_amount,
+congestion_surcharge,
+airport_fee
+)
+
+VALUES(
+
+s.VendorID,
+s.tpep_pickup_datetime,
+s.tpep_dropoff_datetime,
+s.passenger_count,
+s.trip_distance,
+s.RatecodeID,
+s.store_and_fwd_flag,
+s.PULocationID,
+s.DOLocationID,
+s.payment_type,
+s.fare_amount,
+s.extra,
+s.mta_tax,
+s.tip_amount,
+s.tolls_amount,
+s.improvement_surcharge,
+s.total_amount,
+s.congestion_surcharge,
+s.airport_fee
+);
+
+END
+
+
+
+	/*
+
+	(b) load_silver
 */
 
 CREATE TRIGGER bronze.AfterInsert ON bronze.load_silver
@@ -170,7 +236,7 @@ END
 
 --------------------------------------------------------
 /*
-	(b) load_meta
+	(c) load_meta
 */
 
 CREATE TRIGGER bronze.load_meta ON bronze.nyc_inc
@@ -183,8 +249,6 @@ SELECT
 	MAX(GETDATE()) FROM INSERTED
 END
 --------------------------------------------------------
-
-
 
 
 /*
