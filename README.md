@@ -138,7 +138,19 @@ To achieve this, I created the following:
 **GOLD LAYER:**  The cleaned data in the silver layer are queried to answer some analytical questions saved as a view in the gold layer. Examples attached below:
 
 ```SQL
+CREATE VIEW gold.yellowtaxi_weekday_inc
+AS
+SELECT DATENAME(WEEKDAY,tpep_pickup_datetime) AS Day_of_Week ,COUNT(*) AS trips
+FROM silver.nyc_inc
+GROUP BY DATENAME(WEEKDAY,tpep_pickup_datetime)
 
+
+
+CREATE VIEW  gold.yellowtaxi_payment_type_inc
+AS
+SELECT payment_type,COUNT(*) AS transactions
+FROM silver.nyc_inc
+GROUP BY payment_type
 ```
 
 
