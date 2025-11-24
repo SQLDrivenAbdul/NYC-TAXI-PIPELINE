@@ -93,34 +93,40 @@ print("🎉 All conversions completed successfully!")
 ---
 
 ## Data Loading Strategies
-
+---
 <p align="justify">
   
-**Full Load:** This approach of data loading means that all data has to be loaded at once - from January to December data. To achieve this in my data pipeline, I wrote a script to load all data of 2024 wrapped as a stored procedure. This procedure, once executed, populates the bronze layer with data.
-
-<p>
-
-  
-The script that form the stored procedure can be found here: [Full_load.sql](./scripts/Full_load.sql)
+**Full Load:** This approach of data loading means that all data has to be loaded at once - from January to December.
+To achieve this in my data pipeline, i did the following:
+- I wrote a stored procedure which once executed, populates the bronze layer with data.
+- Leveraged SQL Server SELECT INTO to clean the data in the bronze layer and the cleaned data to create a silver layer on a fly.
+- The cleaned data are used to perform some analytical aggregations saved into the gold layer.
 
 To use the procedure, simply run the code below in your data management system.
 
 ```SQL
 EXEC bronze.load_nycbronze
 ```
-Once the bronze is populated, the data is transformed and loaded into silver layer.  
-The cleaned data is then leveraged to answer some analytical questions saved into the gold layer.
+<p>
+
+  
+The script to the full load can be found here: [Full_load.sql](./scripts/Full_load.sql)
+
 
 ---
 
 <p align="justify">
   
-**Incremental Load:** This approach takes the monthly data one at a time. As new data goes into the pipeline, they are appended to the already existing data in the pipeline.
-For instance, the February data when loaded will be added to the January that is already existing in the pipeline.
+**Incremental Load:** This approach takes the monthly data one at a time. As new data goes into the pipeline, they are appended to the already existing ones. The pipeline is also required to track and store last successful load date using a metadata table. At first created a seperate architecture for this approach, showing how data flow across layers in the pipeline. The architecture diagram is attached below.
+
+
+
+
+
+
 
 <p>
   
-Since i will be loading a single file at a time, i use a simply bulk insert statement for loading the data to the bronze layer 
 
 ```SQL
 BULK INSERT bronze.nyc_inc
