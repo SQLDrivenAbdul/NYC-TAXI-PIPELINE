@@ -1,0 +1,79 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8">
+  <diagram name="Page-1" id="yLJs3Yl6QNmsShuOS74e">
+    <mxGraphModel dx="1095" dy="521" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="700" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-43" value="" style="group;dashed=1;sketch=1;curveFitting=1;jiggle=2;glass=0;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="103" y="120" width="624" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-40" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1naQuNsWfQo5gS1d3bGT-43" vertex="1">
+          <mxGeometry width="624" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-39" value="" style="group;dashed=1;dashPattern=8 8;" parent="1naQuNsWfQo5gS1d3bGT-43" vertex="1" connectable="0">
+          <mxGeometry x="30" y="69" width="565" height="171" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-14" value="&lt;font style=&quot;font-size: 15px;&quot; face=&quot;Garamond&quot;&gt;staging table&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1naQuNsWfQo5gS1d3bGT-39" vertex="1">
+          <mxGeometry y="11" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-15" value="&lt;font style=&quot;font-size: 15px;&quot; face=&quot;Garamond&quot;&gt;load_bronze&lt;/font&gt;" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;shape=mxgraph.mscae.enterprise.triggers;fillColor=#0078D7;" parent="1naQuNsWfQo5gS1d3bGT-39" vertex="1">
+          <mxGeometry x="90" y="45" width="20" height="21.28" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-22" value="&lt;font style=&quot;font-size: 15px;&quot; face=&quot;Garamond&quot;&gt;bronze layer&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1naQuNsWfQo5gS1d3bGT-39" vertex="1">
+          <mxGeometry x="200" y="11" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-23" value="&lt;font style=&quot;font-size: 15px;&quot; face=&quot;Garamond&quot;&gt;load_meta&amp;nbsp;&lt;/font&gt;" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;shape=mxgraph.mscae.enterprise.triggers;fillColor=#0078D7;" parent="1naQuNsWfQo5gS1d3bGT-39" vertex="1">
+          <mxGeometry x="253" y="46" width="20" height="21.28" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-24" value="&lt;font style=&quot;font-size: 15px;&quot; face=&quot;Garamond&quot;&gt;meta_data tracking table&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1naQuNsWfQo5gS1d3bGT-39" vertex="1">
+          <mxGeometry x="182" y="131" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-28" value="" style="endArrow=classic;html=1;rounded=0;" parent="1naQuNsWfQo5gS1d3bGT-39" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="260" y="92" as="sourcePoint" />
+            <mxPoint x="260" y="132" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="260" y="122" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-29" value="&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;font style=&quot;font-size: 15px;&quot; face=&quot;Garamond&quot;&gt;load_silver&amp;nbsp;&lt;/font&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;shape=mxgraph.mscae.enterprise.triggers;fillColor=#0078D7;" parent="1naQuNsWfQo5gS1d3bGT-39" vertex="1">
+          <mxGeometry x="293" width="20" height="21.28" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-32" value="&lt;font style=&quot;font-size: 15px;&quot; face=&quot;Garamond&quot;&gt;silver layer&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1naQuNsWfQo5gS1d3bGT-39" vertex="1">
+          <mxGeometry x="465" y="11" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-33" value="" style="edgeStyle=elbowEdgeStyle;html=1;endArrow=block;dashed=0;elbow=vertical;endFill=1;rounded=0;" parent="1naQuNsWfQo5gS1d3bGT-39" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="380" y="41.139999999999986" as="sourcePoint" />
+            <mxPoint x="446" y="41" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-34" value="" style="edgeStyle=elbowEdgeStyle;html=1;endArrow=block;dashed=0;elbow=vertical;endFill=1;rounded=0;" parent="1naQuNsWfQo5gS1d3bGT-39" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="124" y="44.139999999999986" as="sourcePoint" />
+            <mxPoint x="190" y="44" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-35" value="&lt;font style=&quot;font-size: 15px;&quot; face=&quot;Garamond&quot;&gt;gold layer&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;" parent="1naQuNsWfQo5gS1d3bGT-39" vertex="1">
+          <mxGeometry x="465" y="131" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-37" value="" style="endArrow=classic;html=1;rounded=0;" parent="1naQuNsWfQo5gS1d3bGT-39" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="71" as="sourcePoint" />
+            <mxPoint x="520" y="126" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="520" y="116" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-41" value="" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;shape=mxgraph.mscae.enterprise.triggers;fillColor=#0078D7;" parent="1naQuNsWfQo5gS1d3bGT-43" vertex="1">
+          <mxGeometry x="14" y="270" width="18.8" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="1naQuNsWfQo5gS1d3bGT-42" value="&lt;font style=&quot;font-size: 14px;&quot; face=&quot;Garamond&quot;&gt;This icon represent triggers attached to layers in the pipeline - designed to perform specific tasks&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot; face=&quot;Garamond&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1naQuNsWfQo5gS1d3bGT-43" vertex="1">
+          <mxGeometry x="33" y="279" width="556" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
