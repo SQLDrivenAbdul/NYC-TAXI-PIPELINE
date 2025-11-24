@@ -154,7 +154,7 @@ Link to script: [Incremental Load SQL Script](https://github.com/SQLDrivenAbdul/
 
 ---
 
-DATA LOADING
+**DATA LOADING**
 
 This is the only manual task in running the pipeline. Once the data is loaded, it pass through all the steps till it reaches the gold layer automatically.
 ```SQL
@@ -169,7 +169,7 @@ FIRE_TRIGGERS
 );
 ```
 
-## Key Learnings
+## Key Learning
 * Understanding the implementation difference between full load and incremental loading
 * Triggers - using triggers to automate data loading and log keeping
   
