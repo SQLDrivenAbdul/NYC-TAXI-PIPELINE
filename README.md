@@ -21,7 +21,10 @@ The goal of this project is to develop and implement a SQL-based data pipeline, 
 # Data Architecture  
 
 
-[![NYC Yellow Taxi Data Architecture](docs/NYC%20Yellow_Taxi%20Data%20Architecture.PNG)](docs/NYC%20Yellow_Taxi%20Data%20Architecture.PNG)  
+<p align="center">
+  <img src="architecture%20diagrams/NYC%20Data%20Architecture.jpg" alt="NYC Data Architecture" />
+</p>
+ 
 
 ---
 
