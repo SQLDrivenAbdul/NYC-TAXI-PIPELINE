@@ -116,86 +116,37 @@ The script to the full load can be found here: [Full_load.sql](./scripts/Full_lo
 ---
 
 <p align="justify">
-  
-**Incremental Load:** This approach takes the monthly data one at a time. As new data goes into the pipeline, they are appended to the already existing ones. The pipeline is also required to track and store last successful load date using a metadata table. At first created a seperate architecture for this approach, showing how data flow across layers in the pipeline. The architecture diagram is attached below.
+Incremental Load: This approach takes the monthly data one at a time. As new data goes into the pipeline, they are appended to the already existing ones. The pipeline is also required to track and store last successful load date using a metadata table. At first created a seperate architecture for this approach, showing how data flow across layers in the pipeline. The architecture diagram is attached below.
+</p>
 
 
 
 
+<p align="center">
+  <img src="architecture%20diagrams/incremental%20architecture.jpg" alt="Incremental Architecture" />
+</p>
 
+To achieve this, I created the following:
 
+**STAGING TABLE:** This table is the entry point of the pipeline where all data first land. A trigger ``load_bronze`` is attached to  this table. The job of the trigger simple, using a ``MERGE STATEMENT`` it simply check data coming from the staging table that are not existing in the bronze layer, when found, they  are inserted into the bronze layer of the pipeline.
 
-<p>
-  
+**BRONZE LAYER:** This table receives the raw data from the staging table. It has has two triggers attached to  it performing different functions.
 
-```SQL
-BULK INSERT bronze.nyc_inc
-FROM 'C:\Users\USER\OneDrive\Desktop\NYC_ETL_PRROJECT FILE\yellow_tripdata_2024-01.csv' 
-WITH
-(
-FIRSTROW = 2,
-FIELDTERMINATOR = ',',
-TABLOCK,
-FIRE_TRIGGERS
-);
-```
-<p align="justify">
-An AFTER-INSERT TRIGGER has been attached to the bronze layer that ensures that as new data comes into it, it is transformed and a silver layer is created with the cleaned data. Then aggregations are performed on the cleaned data and saved to the gold layer. As these new data come in and they are transformed, the aggregation changes dynamically to reflect the changes that comes with the new data. It is interesting how the only manual operation in this process is the data loading. 
-<p>
-  
-Find the code of the trigger here  [Incremental_load.sql](./scripts/Incremental_load.sql)  
-
----
-
-## META-DATA Management 
-
-I created a metadata table that houses logs of every successful data loading event. It assigns a log_id and keeps the date and time each batch finish loading.
-
-
-```SQL
-CREATE TABLE metadata_table(
-	log_id INT IDENTITY(1,1)  PRIMARY KEY,
-	load_datetime datetime)
-```
-
-
-THE LOAD_META TRIGGER  
-
-
-I created a trigger that fires/feeds the meta_data table once the bronze layer is populated.
-Attached is the script below
-
-```SQL
-CREATE TRIGGER [bronze].[load_meta] ON [bronze].[nyc_inc]
-AFTER INSERT 
-AS
-BEGIN
-INSERT INTO metadata_table
-SELECT
-	
-	MAX(GETDATE()) FROM INSERTED
-END
-```
----
-
-## Query Examples
+ (a) ``load_silver``: This trigger transform and cleans new data in the bronze layer and insert into the silver layer.  
+ (b) ``load_meta``: This trigger tracks data loading into the bronze layer using a metadata table. It records the last successful load datetime dynamically. Any attempt to insert data that's already existing in the bronze leads to the metadata table adding a new record but without a datetime(NULL) because the operation was not successful.
  
+**GOLD LAYER:**  The cleaned data in the silver layer are queried to answer some analytical questions saved as a view in the gold layer. Examples attached below:
+
 ```SQL
--- Trip volume by Weekday 
-CREATE VIEW gold.yellowtaxi_weekday_inc
-AS
-SELECT DATENAME(WEEKDAY,tpep_pickup_datetime) AS Day_of_Week ,COUNT(*) AS trips
-FROM silver.nyc_inc
-GROUP BY DATENAME(WEEKDAY,tpep_pickup_datetime)
 
-
--- Payment_types performance
-CREATE VIEW  gold.yellowtaxi_payment_type_inc
-AS
-SELECT payment_type,COUNT(*) AS transactions
-FROM silver.nyc_inc
-GROUP BY payment_type
 ```
+
+
+
+
+
+
+
 
 ## Key Learnings
 * Understanding the implementation difference between full load and incremental loading
