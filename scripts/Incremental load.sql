@@ -79,10 +79,6 @@ AFTER INSERT
 AS
 BEGIN
 
-IF TRIGGER_NESTLEVEL() > 1 RETURN;
-SET NOCOUNT ON;
-
-
 	INSERT INTO silver.nyc_inc (VendorID, vendor_name, tpep_pickup_datetime, tpep_dropoff_datetime, passenger_count, trip_distance, fare_category, store_and_fwd_flag, PULocationID, DOLocationID,
 	payment_type, fare_amount, extra, mta_tax, tip_amount, tolls_amount, improvement_surcharge, total_amount, congestion_surcharge, airport_fee, trip_status, load_datetime)
 
