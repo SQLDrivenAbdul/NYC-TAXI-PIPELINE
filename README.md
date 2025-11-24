@@ -99,7 +99,7 @@ print("🎉 All conversions completed successfully!")
 **Full Load:** This approach of data loading means that all data has to be loaded at once - from January to December.
 To achieve this in my data pipeline, I did the following:
 - I wrote a stored procedure which once executed, populates the bronze layer with data.
-- Leveraged SQL Server SELECT INTO to clean the data in the bronze layer and the cleaned data to create a silver layer on a fly.
+- Leveraged SQL Server ``SELECT INTO`` to clean the data in the bronze layer and the cleaned data to create a silver layer on a fly.
 - The cleaned data are used to perform some analytical aggregations that are then saved into the gold layer.
 
 To use the procedure, simply run the code below in your data management system.
