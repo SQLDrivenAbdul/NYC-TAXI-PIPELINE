@@ -3,7 +3,7 @@
 
 **Introduction**
 <p align="justify">
-The goal of this project is to develop and implement a SQL-based data pipeline, that ingest, transform, and aggregate the  NYC Yellow Taxi data for the year 2024. The datasets consist of month-by-month operational data on yellow taxi trips. It has 20 columns that describes operations of the taxis in 2024, the columns include vendorID, trip_start_datetime, trip_end_datetime, fare_amount among others that can be used to uncover insights and track trends.
+The goal of this project is to develop and implement a SQL-based data pipeline, that ingest, transform, and aggregate NYC Yellow Taxi data for the year 2024. The dataset consist of month-by-month operational data on yellow taxi trips. It has 20 columns that describes operations of the taxis in 2024, the datasets columns include vendorID, trip_start_datetime, trip_end_datetime, fare_amount among others that can be used to uncover insights and track trends.
 <p>
 
 
@@ -28,7 +28,7 @@ The goal of this project is to develop and implement a SQL-based data pipeline, 
 
 ---
 
-I downloaded the datasets all as parquet files using the python script below  
+I downloaded all the datasets as parquet files using the python script below  
 
 
 ```python
